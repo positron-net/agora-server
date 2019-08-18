@@ -14,7 +14,7 @@ module.exports = (request, remote) => {
       break
 
       case 'CONNECT': // if the message is "CONNECT"
-        auth.connect(request.content.username, request.content.password, request.content.digit, request.content.port, remote.address)
+        auth.connect(request.content.username, request.content.password, request.content.digit, remote.address, request.content.port)
         .then(msg => resolve(msg))
         .catch(err => reject(err))
       break
