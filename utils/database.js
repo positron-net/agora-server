@@ -49,7 +49,10 @@ module.exports = {
     return new Promise((resolve, reject) => {
       fs.exists(`${dbPath}/${key}`, exists => { // if the directory/key exist
         if (exists) {
-          resolve(require(`${dbPath}/${key}/index.json`)) // return the conten of the file
+          fs.readFile(`${dbPath}/${key}/index.json`, (err, data) => { // read the file
+            data = JSON.parse(data) // parse json
+            resolve(data) // return the conten of the file
+          })
         } else {
           reject({ message: 'UNKNOW_KEY' }) // If the key is not found
         }

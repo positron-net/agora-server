@@ -1,6 +1,6 @@
-global.config = require('./config.json.js') // import config file
-const console = require('./utils/logger.js.js') // import console module
-const router = require('./utils/router.js.js') // import router
+global.config = require('./config.json') // import config file
+const console = require('./utils/logger.js') // import console module
+const router = require('./utils/router.js') // import router
 const db = require('./utils/database') // init db
 
 console.log('\033c') // clear the terminal
@@ -30,9 +30,10 @@ server.on('error', (err) => {
 
 // When a message is received from a client
 server.on('message', (msg, remote) => {
-  console.log(`New message from [${remote.address}:${remote.port}]`) // show it in the terminal
-
   msg = JSON.parse(msg) // parse the json
+
+  console.log(`${msg.action} > [${remote.address}:${remote.port}]`) // show it in the terminal
+
   router(msg, remote)
   .then(result => send(msg, remote, result)) // send the result
   .catch(result => { // show and send the error
