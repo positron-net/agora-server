@@ -45,6 +45,7 @@ module.exports = {
     })
   },
 
+  // get value from a key
   get (key) {
     return new Promise((resolve, reject) => {
       fs.exists(`${dbPath}/${key}`, exists => { // if the directory/key exist
@@ -60,6 +61,7 @@ module.exports = {
     })
   },
 
+  // verify if the value exist
   has (key) {
     return new Promise((resolve, reject) => {
       fs.exists(`${dbPath}/${key}`, exists => { // if directory/key exist
@@ -68,6 +70,16 @@ module.exports = {
         } else {
           reject({ message: 'UNKNOW_KEY' }) // If the key is not found
         }
+      })
+    })
+  },
+
+  // list all keys
+  list () {
+    return new Promise((resolve, reject) => {
+      fs.readdir(dbPath, (err, files) => {
+        if (err) reject(err)
+        resolve(files)
       })
     })
   }
