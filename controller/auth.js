@@ -7,6 +7,7 @@ const auth = {
   generate (user, password, digit) {
     return new Promise(resolve => {
       // hash username + digit with the password and the Agora' pivate key
+      console.log(user, digit, password)
       hash(user + digit, password + key).then(token => {
         resolve(token) // return the token
       })
