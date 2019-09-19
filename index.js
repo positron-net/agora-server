@@ -37,7 +37,7 @@ server.on('message', (msg, remote) => {
   router(msg, remote)
   .then(result => send(msg, remote, result)) // send the result
   .catch(result => { // show and send the error
-    console.warn(`Error for [${remote.address}:${remote.port}] : ${result.message}`)
+    console.warn(`Error for [${remote.address}:${remote.port}] (${msg.action}) : ${result.message}`)
     send(msg, remote, result)
   })
 })

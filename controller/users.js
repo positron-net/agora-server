@@ -11,25 +11,30 @@ const users = {
   },
 
   // get a list of user
-  list (number) {
-    return new Promise((resolve, reject) => {
-      db.list() // list all the users
-      .then(files => {
-        if (files.length < number) { // if the number of users is less than the number got by the "princpal" user.
-          resolve(files) // return datas
-        } else { // also
-          const offset = Math.round(files.length / number) // we create an offset
-          let tokens = [] // this array will store all the tokens
-  
-          for (let i = 0; i < number; i++) {
-            tokens.push(files[i + offset])
-          }
-  
-          resolve(tokens) // return datas
-        }
-      })
-      .catch(e => reject(e)) // if there is an error with the database
+  async list (number) {
+
+    let r = []
+
+    db.list()
+    .then(clients => {
+      for (let i = 0; clients.length > i; i++) {
+        db.get(clients[i])
+        .then(data => {
+          r.push({
+            token: clients[i],
+            data: data
+          })
+        })
+        .catch(e => reject(e)) 
+      }
+
+      console.log(r)
     })
+    /*
+    return new Promise((resolve, reject) => {
+
+    })
+    */
   }
 }
 
