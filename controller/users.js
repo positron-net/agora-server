@@ -10,31 +10,36 @@ const users = {
     })
   },
 
-  // get a list of user
-  async list (number) {
-
+  async getAll (clients) {
     let r = []
 
-    db.list()
-    .then(clients => {
-      for (let i = 0; clients.length > i; i++) {
-        db.get(clients[i])
-        .then(data => {
-          r.push({
-            token: clients[i],
-            data: data
-          })
+    for (let i = 0; clients.length > i; i++) {
+      await db.get(clients[i])
+      .then(data => {
+        r.push({
+          token: clients[i],
+          data: data
         })
-        .catch(e => reject(e)) 
-      }
+      })
+      .catch(e => { return e }) 
+    }
 
-      console.log(r)
-    })
-    /*
-    return new Promise((resolve, reject) => {
+    return r
+  },
 
+  // get a list of user
+  list (number) {
+    return new Promise(resolve => {
+      db.list()
+      .then(clients => {
+  
+        this.getAll(clients)
+        .then(r => {
+          resolve(r)
+        })
+  
+      }) 
     })
-    */
   }
 }
 

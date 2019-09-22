@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A rendezvous server build for the peer-to-peer Positron protocol",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,5 +11,15 @@
   "license": "NPOSL-3.0",
   "dependencies": {
     "chalk": "^2.4.2"
+  },
+  "pkg": {
+    "assets": [
+      "utils/*",
+      "controller/*",
+      "database/*"
+    ],
+    "targets": [
+      "node8"
+    ]
   }
 }
